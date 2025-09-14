@@ -38,7 +38,7 @@ Split: Train = 2020–2022, Test = 2023.
 
 ### Current Baseline Metrics (2023 test)
 
-- R²: 0.2816
+- R²: 0.7216
 - RMSE: 8.4333
 - MAE: 6.5073
 
