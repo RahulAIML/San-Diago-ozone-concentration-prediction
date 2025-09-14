@@ -93,3 +93,6 @@ Notes:
 - Install: `pip install -r requirements.txt`
 - Train: `python train_ozone_model.py` or `python train_ozone_advanced.py`
 - App: `streamlit run app.py`
+- ##Screenshot
+- <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/96baf343-892d-41e7-b236-1fa3f710e9c5" />
+
