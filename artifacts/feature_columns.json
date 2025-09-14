@@ -1,0 +1,16 @@
+{
+  "feature_cols": [
+    "year",
+    "month",
+    "dayofweek",
+    "tavg",
+    "tmin",
+    "tmax",
+    "wspd",
+    "pres",
+    "month_sin",
+    "month_cos",
+    "land_sea_temp_diff",
+    "wspd_x_land_sea_temp_diff"
+  ]
+}

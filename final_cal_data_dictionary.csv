@@ -1,0 +1,70 @@
+Variable,Category,Definition,Units,Reason_for_Use,Scientific_Significance,Feature_Selection_Priority,Expected_Importance
+Date,Identifier,Date of observation,YYYY-MM-DD,Time series index,Essential for temporal modeling,Required,N/A - Index
+Site ID,Identifier,Unique EPA air quality monitoring site identifier,Text,Spatial grouping for multi-site modeling,Enables site-specific effects,Required,N/A - Index
+Local Site Name,Identifier,Human-readable site name,Text,Documentation and visualization,Interpretability,Low,N/A - Label
+ozone_ppb,Target,Daily maximum 8-hour ozone concentration,ppb,Primary dependent variable,Public health threshold (70 ppb EPA standard),Required,N/A - Target
+Site Latitude,Spatial,Latitude of monitoring site,Decimal degrees,Spatial analysis and mapping,Geographic context,Medium,Low
+Site Longitude,Spatial,Longitude of monitoring site,Decimal degrees,Spatial analysis and mapping,Geographic context,Medium,Low
+year,Temporal,Year of observation,Integer,Long-term trends and train/test splitting,Captures inter-annual variability,High,Medium
+month,Temporal,Month of year (1-12),Integer,Strong seasonal ozone patterns,Peak ozone in summer months,High,High
+dayofweek,Temporal,Day of week (0=Monday),Integer,Weekend effect (lower traffic emissions),NOx emission patterns,Medium,Medium
+dayofyear,Temporal,Day of year (1-366),Integer,Precise seasonal timing,Solar angle and photochemistry,Medium,Medium
+is_weekend,Temporal,Weekend flag (1=Sat/Sun),Binary,Traffic and emission pattern differences,NOx chemistry timing,Medium,Medium
+dow,Temporal,Day of week (alternative encoding),Integer,Redundant with dayofweek,Same as dayofweek,Low,Low
+holiday,Temporal,Federal holiday flag,Binary,Reduced traffic and industrial activity,Emission source variations,Low,Low
+season,Temporal,"Season (1=Spring, 2=Summer, 3=Fall, 4=Winter)",Integer,Broad seasonal patterns,Photochemistry and meteorology,Medium,Medium
+month_sin,Temporal,Sine of month (cyclical encoding),Float,Smooth seasonal variation capture,Continuous seasonal effects,High,High
+month_cos,Temporal,Cosine of month (cyclical encoding),Float,Smooth seasonal variation capture,Continuous seasonal effects,High,High
+week_of_year,Temporal,Week number (1-53),Integer,Fine-scale seasonal timing,Intermediate seasonal patterns,Low,Low
+is_school_day,Temporal,"School day flag (weekday, non-holiday)",Binary,Traffic pattern indicator,Commuter emission patterns,Low,Low
+ozone_lag_1,Ozone History,Ozone concentration 1 day ago,ppb,Strong persistence in ozone,Often strongest single predictor,Very High,Very High
+ozone_roll_mean_7,Ozone History,7-day rolling mean ozone,ppb,Recent ozone trend/baseline,Smooths daily variability,High,High
+ozone_roll_std_7,Ozone History,7-day rolling standard deviation,ppb,Recent ozone variability measure,Stability/instability indicator,Medium,Medium
+ozone_roll_max_14,Ozone History,14-day rolling maximum ozone,ppb,Recent extreme event indicator,High ozone episode memory,Medium,Medium
+tavg,Meteorology,Daily average temperature,°C,Primary ozone formation driver,Controls photochemical reaction rates,Very High,Very High
+tmin,Meteorology,Daily minimum temperature,°C,Overnight ozone destruction,Nighttime chemistry and stability,High,High
+tmax,Meteorology,Daily maximum temperature,°C,Peak photochemical activity,Maximum reaction rate conditions,Very High,Very High
+temp_range,Meteorology,Daily temperature range (tmax-tmin),°C,Diurnal temperature variation,Atmospheric mixing indicator,Medium,Medium
+prcp,Meteorology,Daily precipitation,mm,Ozone washout and cloud effects,Wet deposition and photolysis,Medium,Medium
+snow,Meteorology,Daily snowfall,mm,Surface albedo and cold conditions,Minimal relevance for San Diego,Very Low,Very Low
+wdir,Meteorology,Wind direction,degrees,Pollutant transport patterns,Onshore/offshore flow effects,Medium,Medium
+wspd,Meteorology,Wind speed,km/h,Pollutant dispersion and transport,Dilution and marine layer effects,High,High
+wpgt,Meteorology,Peak wind gust,km/h,Turbulent mixing indicator,Enhanced vertical mixing,Low,Low
+pres,Meteorology,Atmospheric pressure,hPa,Synoptic weather pattern indicator,Large-scale circulation effects,Medium,Medium
+tsun,Meteorology,Daily sunshine duration,hours,UV radiation for photochemistry,Direct ozone formation driver,High,High
+Tmax_inland,Land-Ocean,Maximum temperature at inland reference site,°C,Land-sea temperature contrast,Sea breeze strength driver,High,High
+Windspeed_inland,Land-Ocean,Wind speed at inland reference site,km/h,Inland-coastal wind contrast,Marine layer penetration,Medium,Medium
+Tmax_ocean,Land-Ocean,Air temperature over ocean,°C,Marine air mass temperature,Coastal cooling potential,Medium,Medium
+Windspeed_coast,Land-Ocean,Wind speed at coastal reference,km/h,Coastal wind patterns,Sea breeze and dispersion,Medium,Medium
+land_sea_temp_diff,Land-Ocean,Tmax_inland - SST,°C,Thermal gradient driving sea breeze,Marine layer development,High,High
+coast_inland_wind_diff,Land-Ocean,Windspeed_coast - Windspeed_inland,km/h,Wind speed gradient,Regional flow patterns,Medium,Medium
+thermal_stability,Land-Ocean,(SST - tavg) / wspd,°C·s/m,Marine layer stability measure,Atmospheric stratification,High,Medium
+marine_layer_depth_proxy,Land-Ocean,Proxy for marine layer thickness,dimensionless,Marine boundary layer effects,Vertical mixing and transport,High,Medium
+marine_layer_presence,Land-Ocean,Binary flag for marine layer conditions,Binary,Marine layer event detection,Distinct meteorological regime,High,Medium
+CUTI Coastal Upwelling Transport Index (m^2/s),Upwelling,Coastal upwelling transport index,m²/s,Core hypothesis: ocean-atmosphere coupling,Cold water upwelling affects marine layer,Very High,High
+Cumulative CUTI Coastal Upwelling Transport Index (m^2/s),Upwelling,Running sum of CUTI,m²/s,Persistent upwelling effects,Cumulative ocean cooling,Medium,Medium
+CUTI Coastal Upwelling Transport Index (m^2/s)_lag1,Upwelling,CUTI 1 day ago,m²/s,Delayed upwelling effects,Ocean-atmosphere lag,High,High
+CUTI Coastal Upwelling Transport Index (m^2/s)_lag3,Upwelling,CUTI 3 days ago,m²/s,Multi-day upwelling persistence,Extended ocean influence,Medium,Medium
+CUTI Coastal Upwelling Transport Index (m^2/s)_lag7,Upwelling,CUTI 7 days ago,m²/s,Weekly upwelling patterns,Longer-term ocean effects,Medium,Medium
+CUTI Coastal Upwelling Transport Index (m^2/s)_roll7_mean,Upwelling,7-day mean CUTI,m²/s,Recent upwelling trend,Smoothed ocean signal,High,High
+BEUTI Biological Effective Upwelling Transport Index (mmol m/s),Upwelling,Biologically effective upwelling,mmol N/s/m,Nutrient-based upwelling measure,Ecosystem-relevant upwelling,High,Medium
+BEUTI Biological Effective Upwelling Transport Index (mmol m/s)_lag1,Upwelling,BEUTI 1 day ago,mmol N/s/m,Delayed biological upwelling effects,Ecosystem response timing,Medium,Medium
+BEUTI Biological Effective Upwelling Transport Index (mmol m/s)_roll7_mean,Upwelling,7-day mean BEUTI,mmol N/s/m,Recent biological upwelling trend,Smoothed ecosystem signal,Medium,Medium
+Bakun Offshore Transport (m^3/s/100m),Upwelling,Bakun offshore transport index,m³/s/100m,Historical upwelling comparison,Classic upwelling metric,Medium,Medium
+Bakun Along-shore Transport (m^3/s/100m),Upwelling,Bakun alongshore transport,m³/s/100m,Coastal current transport,Parallel-coast flow effects,Low,Low
+sst_value_sst,Ocean Temperature,Sea surface temperature,°C,Direct ocean temperature effect,Marine layer temperature control,High,High
+sst_anomaly,Ocean Temperature,SST deviation from climatology,°C,Unusual ocean conditions,Extreme ocean events,High,Medium
+sst_value_sst_lag1,Ocean Temperature,SST 1 day ago,°C,Ocean temperature persistence,Thermal inertia effects,Medium,Medium
+sst_value_anom,Ocean Temperature,SST anomaly (alternative),°C,Redundant with sst_anomaly,Same as sst_anomaly,Low,Low
+sst_flag_sst,Ocean Temperature,SST data quality flag,Integer,Data quality control,Identifies missing/poor data,Low,N/A - QC
+ozone_exceed_70,Event Flags,Ozone exceeds EPA standard (70 ppb),Binary,Health-relevant threshold,Regulatory compliance indicator,Medium,Medium
+heatwave_flag,Event Flags,Temperature exceeds heat threshold,Binary,Extreme temperature events,High ozone risk conditions,Medium,Medium
+strong_upwelling_event,Event Flags,CUTI exceeds 90th percentile,Binary,Extreme upwelling events,Strong marine influence periods,Medium,Medium
+distance_to_coast_km,Spatial,Distance from site to coastline,km,Marine influence proximity,Distance-decay of ocean effects,Medium,Medium
+region_type,Spatial,Site classification (coastal/inland),Categorical,Site type grouping,Different exposure to marine effects,Medium,Medium
+EPA_Site_ID,Metadata,Alternative EPA site identifier,Text,Data management,Cross-reference identifier,Low,N/A - ID
+EPA_Site_Name,Metadata,Alternative EPA site name,Text,Data management,Cross-reference name,Low,N/A - Label
+Weather_Filename,Metadata,Source weather data file,Text,Data provenance tracking,Quality control reference,Low,N/A - QC
+impute,Metadata,Data imputation flag,Binary,Missing data indicator,Data quality assessment,Low,N/A - QC
+sst_date,Metadata,SST data date,Date,SST data timestamp,Temporal alignment check,Low,N/A - QC
+geometry,Metadata,Site geometric coordinates,Geometry,GIS spatial operations,Mapping and spatial analysis,Low,N/A - Spatial
